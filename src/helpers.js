@@ -1,6 +1,5 @@
 export function findOwnerClassPath(path) {
-  return path.findParent(path =>
-    path.isClassDeclaration()
+  return path.findParent(path => path.isClassDeclaration()
   )
 }
 
