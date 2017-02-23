@@ -4,7 +4,7 @@ import {findOwnerClassPath, isConstructor, isEventAttribute, isPureMemberExpress
 function plugin({types: t}) {
   return {
     visitor: {
-      Program(programPath, opts) {
+      Program(programPath, sate) {
         programPath.traverse({
           ClassDeclaration: {
             enter(path) {
@@ -54,7 +54,7 @@ function plugin({types: t}) {
               }
             }, {addedEventNames: this.addedEventNames})
           }
-        }, {addedEventNames: null, opts})
+        }, {addedEventNames: null, sate})
       }
 
     }
