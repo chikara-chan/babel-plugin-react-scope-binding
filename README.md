@@ -69,7 +69,7 @@ Write via [babelrc](https://babeljs.io/docs/usage/babelrc/).
 // .babelrc
 {
   "plugins": [
-    ["add-module-exports", {
+    ["react-scope-binding", {
       "propPrefix": "on",
       "advanced": true
     }]
