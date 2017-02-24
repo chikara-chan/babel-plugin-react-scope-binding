@@ -10,3 +10,9 @@
 
 - Fix conflict with es2015.
 
+## 1.0.2 (2017-02-24)
+
+#### Bug Fixes
+
+- Fix untouched class declaration method.
+
