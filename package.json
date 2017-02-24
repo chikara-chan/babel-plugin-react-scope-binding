@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-react-scope-binding",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Babel plugin for React component to make event handler auto binding to context.",
   "keywords": [
     "babel-plugin"
