@@ -6,7 +6,7 @@ function plugin({types: t}) {
     visitor: {
       Program(programPath, state) {
         programPath.traverse({
-          ClassDeclaration: {
+          ClassExpression: {
             enter(path) {
               const superClass = path.get('superClass'),
                 classMethodPaths = path.get('body').get('body')
