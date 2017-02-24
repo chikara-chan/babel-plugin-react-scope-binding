@@ -4,7 +4,7 @@ import {findOwnerClassPath, isConstructor, isEventAttribute, isPureMemberExpress
 function plugin({types: t}) {
   return {
     visitor: {
-      Program(programPath, sate) {
+      Program(programPath, state) {
         programPath.traverse({
           ClassDeclaration: {
             enter(path) {
@@ -23,13 +23,13 @@ function plugin({types: t}) {
               delete this.addedEventNames
             }
           },
-          JSXAttribute(path, state) {
+          JSXAttribute(path) {
             let eventName, classPath
 
-            if (!isEventAttribute(path, t, state.opts.propPrefix)) {
+            if (!isEventAttribute(path, t, this.state.opts.propPrefix)) {
               return
             }
-            if (state.opts.advanced === true && isPureCallExpressionWithThis(path.get('value').get('expression'), t)) {
+            if (this.state.opts.advanced === true && isPureCallExpressionWithThis(path.get('value').get('expression'), t)) {
               const handler = path.get('value').get('expression').get('callee').get('property').node.name,
                 nodeArgs = path.get('value').get('expression').node.arguments
 
@@ -40,6 +40,7 @@ function plugin({types: t}) {
             if (!isPureMemberExpressionWithThis(path.get('value').get('expression'), t)) {
               return
             }
+
             eventName = path.get('value').get('expression').get('property').node.name
             if (!this.addedEventNames || ~this.addedEventNames.indexOf(eventName)) {
               return
@@ -54,9 +55,8 @@ function plugin({types: t}) {
               }
             }, {addedEventNames: this.addedEventNames})
           }
-        }, {addedEventNames: null, sate})
+        }, {addedEventNames: null, state})
       }
-
     }
   }
 }
