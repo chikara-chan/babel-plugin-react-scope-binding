@@ -8,11 +8,13 @@ export function isConstructor(path, t) {
 }
 
 // E.g. onClick={}
-export function isEventAttribute(path, t, propPrefix = 'on') {
+export function isEventAttribute(path, propPrefix) {
   let ret = false
 
-  if (!t.isJSXIdentifier(path.get('name')) ||
-    !t.isJSXExpressionContainer(path.get('value'))) {
+  if (
+    !path.get('name').isJSXIdentifier() ||
+    !path.get('value').isJSXExpressionContainer()
+  ) {
     return ret
   }
 
@@ -34,16 +36,16 @@ export function isEventAttribute(path, t, propPrefix = 'on') {
 }
 
 // E.g. onClick={this.handleClick}
-export function isPureMemberExpressionWithThis(path, t) {
-  return t.isMemberExpression(path) &&
-    t.isThisExpression(path.get('object').node) &&
-    t.isIdentifier(path.get('property').node)
+export function isHandlerExpression(path) {
+  return path.isMemberExpression() &&
+    path.get('object').isThisExpression() &&
+    path.get('property').isIdentifier()
 }
 
 // E.g. onClick={this.handleClick(item)}
-export function isPureCallExpressionWithThis(path, t) {
-  return t.isCallExpression(path) &&
-    isPureMemberExpressionWithThis(path.get('callee'), t)
+export function isHandlerExpressionWithParams(path) {
+  return path.isCallExpression() &&
+    isHandlerExpression(path.get('callee'))
 }
 
 function isPathReactClass(path) {
