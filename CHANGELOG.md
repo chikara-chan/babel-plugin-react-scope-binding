@@ -26,3 +26,9 @@
 
 - Fix the problem of advanced usage.
 
+## 1.1.1 (2017-02-25)
+
+#### Bug Fixes
+
+- Fix unaccessible class expression, program begin with class decoration.
+
