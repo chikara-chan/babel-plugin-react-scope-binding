@@ -11,10 +11,8 @@ export function isConstructor(path, t) {
 export function isEventAttribute(path, propPrefix) {
   let ret = false
 
-  if (
-    !path.get('name').isJSXIdentifier() ||
-    !path.get('value').isJSXExpressionContainer()
-  ) {
+  if (!path.get('name').isJSXIdentifier() ||
+    !path.get('value').isJSXExpressionContainer()) {
     return ret
   }
 
