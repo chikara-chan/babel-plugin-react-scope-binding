@@ -16,3 +16,13 @@
 
 - Fix untouched class declaration method.
 
+## 1.1.0 (2017-02-25)
+
+#### Refactors
+
+- Rewrite core module.
+
+#### Bug Fixes
+
+- Fix the problem of advanced usage.
+
