@@ -1,61 +1,71 @@
 import {buildConstructor, buildBindingStatement, buildArrowFunction} from './factory'
-import {findOwnerClassPath, isConstructor, isEventAttribute, isPureMemberExpressionWithThis, isPureCallExpressionWithThis, isReactClass} from './helpers'
+import {isEventAttribute, isHandlerExpression, isHandlerExpressionWithParams, isReactClass} from './helpers'
 
 function plugin({types: t}) {
   return {
     visitor: {
-      Program(programPath, state) {
+      Program(programPath, {opts}) {
+        const defaultOpts = {
+          propPrefix: 'on',
+          advanced: false
+        }
+
+        opts = {...defaultOpts, ...opts}
         programPath.traverse({
-          ClassExpression: {
-            enter(path) {
-              const superClass = path.get('superClass'),
-                classMethodPaths = path.get('body').get('body')
+          ClassExpression(classPath) {
+            const superClass = classPath.get('superClass'),
+              addedEventNames = []
+            let bodyPaths = classPath.get('body').get('body')
 
-              if (!superClass.node || !isReactClass(superClass, path.scope)) {
-                return
-              }
-              this.addedEventNames = []
-              if (!classMethodPaths.some(classMethodPath => isConstructor(classMethodPath, t))) {
-                path.get('body').node.body.unshift(buildConstructor(t))
-              }
-            },
-            exit() {
-              delete this.addedEventNames
-            }
-          },
-          JSXAttribute(path) {
-            let eventName, classPath
-
-            if (!isEventAttribute(path, t, this.state.opts.propPrefix)) {
+            if (!superClass || !isReactClass(superClass, classPath.scope)) {
               return
             }
-            if (this.state.opts.advanced === true && isPureCallExpressionWithThis(path.get('value').get('expression'), t)) {
-              const handler = path.get('value').get('expression').get('callee').get('property').node.name,
-                nodeArgs = path.get('value').get('expression').node.arguments
-
-              path.get('value').get('expression').replaceWith(buildArrowFunction(t, handler, nodeArgs))
-
-              return
-            }
-            if (!isPureMemberExpressionWithThis(path.get('value').get('expression'), t)) {
-              return
+            if (!bodyPaths.some(bodyPath =>
+              bodyPath.isClassMethod({kind: 'constructor'})
+            )) {
+              classPath.get('body').node.body.unshift(buildConstructor(t))
+              bodyPaths = classPath.get('body').get('body')
             }
 
-            eventName = path.get('value').get('expression').get('property').node.name
-            if (!this.addedEventNames || ~this.addedEventNames.indexOf(eventName)) {
-              return
-            }
-            classPath = findOwnerClassPath(path)
             classPath.traverse({
-              ClassMethod(path) {
-                if (isConstructor(path, t) && findOwnerClassPath(path) === classPath) {
-                  path.get('body').pushContainer('body', buildBindingStatement(t, eventName))
-                  this.addedEventNames.push(eventName)
+              JSXAttribute(path) {
+                let eventName,
+                  JSXExpression
+
+                if (!isEventAttribute(path, opts.propPrefix)) {
+                  return
+                }
+                JSXExpression = path.get('value').get('expression')
+                if (opts.advanced === true && isHandlerExpressionWithParams(JSXExpression, t)) {
+                  const handler = JSXExpression.get('callee').get('property').node.name,
+                    nodeArgs = JSXExpression.node.arguments
+
+                  JSXExpression.replaceWith(buildArrowFunction(t, handler, nodeArgs))
+
+                  return
+                }
+                if (!isHandlerExpression(path.get('value').get('expression'), t)) {
+                  return
+                }
+
+                eventName = JSXExpression.get('property').node.name
+                if (~this.addedEventNames.indexOf(eventName)) {
+                  return
+                }
+                if (bodyPaths.some(bodyPath =>
+                  bodyPath.get('key').isIdentifier({name: eventName})
+                )) {
+                  bodyPaths.forEach(bodyPath => {
+                    if (bodyPath.isClassMethod({kind: 'constructor'})) {
+                      bodyPath.get('body').pushContainer('body', buildBindingStatement(t, eventName))
+                      this.addedEventNames.push(eventName)
+                    }
+                  })
                 }
               }
-            }, {addedEventNames: this.addedEventNames})
+            }, {addedEventNames})
           }
-        }, {addedEventNames: null, state})
+        })
       }
     }
   }
