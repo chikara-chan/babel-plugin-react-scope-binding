@@ -40,7 +40,7 @@ class Header extends React.Component{
 
 Oh shit! It's so troublesome.
 So, this plugin is born to resolve these thorny problems.
-With this plugin, you can easily code without caring about content.
+With this plugin, you can easily code without caring about context.
 
 Instead,
 
