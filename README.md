@@ -27,7 +27,9 @@ class Header extends React.Component{
     this.handleClick = this.handleClick.bind(this) // binding method
   }
   handleClick(e) {
-    this.setSate({})
+    this.setSate({
+      key: 'value'
+    })
   }
   render() {
     return (
@@ -51,7 +53,9 @@ class Header extends React.Component{
     // needn't binding method
   }
   handleClick(e) {
-    this.setSate({})
+    this.setSate({
+      key: 'value'
+    })
   }
   render() {
     return (
