@@ -14,6 +14,7 @@ function plugin({types: t}) {
         let bodyPaths = classPath.get('body').get('body')
 
         opts = {...defaultOpts, ...opts}
+        console.log(superClass)
         if (!superClass || !isReactClass(superClass, classPath.scope)) {
           return
         }
