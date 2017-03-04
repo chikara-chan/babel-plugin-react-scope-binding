@@ -32,7 +32,7 @@
 
 - Fix unaccessible class expression, program begin with class decoration.
 
-## 1.1.2 (2017-03-4)
+## 1.1.2 (2017-03-04)
 
 #### Bug Fixes
 
