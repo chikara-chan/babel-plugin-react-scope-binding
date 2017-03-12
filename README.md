@@ -89,9 +89,9 @@ Name | Type | Default | Description
 propPrefix | String \| Array | 'on' | Tell plugin what the JSX attributes need binding, default with 'on' prefix, e.g. onClick, onChange. You can also pass an Array to this option, such as ['on', '...']
 advanced | Boolean | false | Enable advanced usage. In some situation, you want to pass value to event handler. With this option enabled, you can easily write a code such as `<div onClick={this.handleClick(item)}></div>`. Plugin will auto transpile it to `<div onClick={(e) => {this.handleClick(e, item)}></div>`
 
-## Author
+## Links
 
-Chikara Chan
+[https://chikara-chan.github.io/babel-plugin-react-scope-binding/](https://chikara-chan.github.io/babel-plugin-react-scope-binding/)
 
 ## License
 
