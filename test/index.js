@@ -26,6 +26,3 @@ dirnames.forEach(dirname => {
     t.is(code, expectedCode)
   })
 })
-
-
-

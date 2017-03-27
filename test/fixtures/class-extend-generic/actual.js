@@ -1,4 +1,4 @@
-class A extends B{
+class A extends B {
   constructor() {
     super()
 

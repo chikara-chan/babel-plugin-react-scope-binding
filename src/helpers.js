@@ -4,7 +4,9 @@ export function findOwnerClassPath(path) {
 }
 
 export function isConstructor(path, t) {
-  return t.isIdentifier(path.get('key').node, {name: 'constructor'})
+  return t.isIdentifier(path.get('key').node, {
+    name: 'constructor'
+  })
 }
 
 // E.g. onClick={}
