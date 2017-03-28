@@ -4,7 +4,9 @@ class A extends Component {
   constructor() {
     super()
 
-    this.a = 1
+    this.state = {
+      a: 1
+    }
   }
 
   say() {
