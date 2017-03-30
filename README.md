@@ -1,6 +1,6 @@
 # babel-plugin-react-scope-binding
 
-Babel plugin for React component to make event handler auto binding to context.
+Babel plugin for React component to take event handler to bind context automatically.
 
 [![Travis branch](https://img.shields.io/travis/chikara-chan/babel-plugin-react-scope-binding/master.svg)](https://travis-ci.org/chikara-chan/babel-plugin-react-scope-binding)
 [![npm](https://img.shields.io/npm/v/babel-plugin-react-scope-binding.svg)](https://www.npmjs.com/package/babel-plugin-react-scope-binding)
