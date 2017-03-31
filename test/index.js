@@ -14,7 +14,7 @@ dirnames.forEach(dirname => {
         path.resolve(__dirname, `fixtures/${dirname}/actual.js`),
         {
           presets: ['es2015', 'stage-0', 'react'],
-          plugins: [plugin]
+          plugins: [plugin, 'transform-decorators-legacy']
         }
       ),
       promisify(readFile)(
