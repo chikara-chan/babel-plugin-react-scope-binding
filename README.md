@@ -10,8 +10,6 @@ Babel plugin for React component to take event handler to bind context automatic
 
 ```bash
 $ npm install babel-plugin-react-scope-binding --save-dev
-# Or
-$ yarn add babel-plugin-react-scope-binding --dev
 ```
 
 ## Why?
