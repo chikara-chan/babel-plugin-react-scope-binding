@@ -12,7 +12,7 @@ Babel plugin for React component to take event handler to bind context automatic
 $ npm install babel-plugin-react-scope-binding --save-dev
 ```
 
-## Why?
+## Motivation
 
 When you are building a React component, you have to be careful about event handler. In component, class methods are not bound by default. If you forget to bind `this.handleClick` and pass it to onClick, this will be undefined when the function is actually called.
 
