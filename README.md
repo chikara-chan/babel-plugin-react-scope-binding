@@ -6,7 +6,7 @@ Babel plugin for React component to take event handler to bind context automatic
 [![npm](https://img.shields.io/npm/v/babel-plugin-react-scope-binding.svg)](https://www.npmjs.com/package/babel-plugin-react-scope-binding)
 [![npm](https://img.shields.io/npm/l/babel-plugin-react-scope-binding.svg)](https://github.com/chikara-chan/babel-plugin-react-scope-binding/blob/master/LICENSE)
 
-## Install
+## Installation
 
 ```bash
 $ npm install babel-plugin-react-scope-binding --save-dev
